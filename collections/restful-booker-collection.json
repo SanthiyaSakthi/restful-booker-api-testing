@@ -148,19 +148,7 @@
               "listen": "prerequest",
               "script": {
                 "exec": [
-                  "// Calculate a checkin date 14 days from today\r",
-                  "const today = new Date();\r",
-                  "const checkinDate = new Date(today);\r",
-                  "checkinDate.setDate(today.getDate() + 14);\r",
-                  "\r",
-                  "const checkoutDate = new Date(checkinDate);\r",
-                  "checkoutDate.setDate(checkinDate.getDate() + 7);\r",
-                  "\r",
-                  "// Format as YYYY-MM-DD\r",
-                  "const formatDate = (date) => date.toISOString().split('T')[0];\r",
-                  "\r",
-                  "pm.variables.set(\"dynamic_checkin\", formatDate(checkinDate));\r",
-                  "pm.variables.set(\"dynamic_checkout\", formatDate(checkoutDate));"
+                  ""
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -173,7 +161,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"firstname\": \"Jane\",\r\n    \"lastname\": \"Doe\",\r\n    \"totalprice\": 150,\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"{{dynamic_checkin}}\",\r\n        \"checkout\": \"{{dynamic_checkout}}\"\r\n    },\r\n    \"additionalneeds\": \"Breakfast\"\r\n}",
+              "raw": "{\r\n    \"firstname\": \"Jane\",\r\n    \"lastname\": \"Doe\",\r\n    \"totalprice\": 150,\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2026-07-01\",\r\n        \"checkout\": \"2026-07-10\"        \r\n    },\r\n    \"additionalneeds\": \"Breakfast\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -292,6 +280,29 @@
                 "packages": {},
                 "requests": {}
               }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Calculate a checkin date 14 days from today\r",
+                  "const today = new Date();\r",
+                  "const checkinDate = new Date(today);\r",
+                  "checkinDate.setDate(today.getDate() + 14);\r",
+                  "\r",
+                  "const checkoutDate = new Date(checkinDate);\r",
+                  "checkoutDate.setDate(checkinDate.getDate() + 7);\r",
+                  "\r",
+                  "// Format as YYYY-MM-DD\r",
+                  "const formatDate = (date) => date.toISOString().split('T')[0];\r",
+                  "\r",
+                  "pm.variables.set(\"dynamic_checkin\", formatDate(checkinDate));\r",
+                  "pm.variables.set(\"dynamic_checkout\", formatDate(checkoutDate));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
             }
           ],
           "request": {
@@ -299,7 +310,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"firstname\": \"{{$randomFirstName}}\",\r\n    \"lastname\": \"{{$randomLastName}}\",\r\n    \"totalprice\": {{$randomInt}},\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2026-07-01\",\r\n        \"checkout\": \"2026-07-10\"\r\n    },\r\n    \"additionalneeds\": \"Breakfast\"\r\n}",
+              "raw": "{\r\n    \"firstname\": \"{{$randomFirstName}}\",\r\n    \"lastname\": \"{{$randomLastName}}\",\r\n    \"totalprice\": {{$randomInt}},\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"{{dynamic_checkin}}\",\r\n        \"checkout\": \"{{dynamic_checkout}}\"\r\n    },\r\n    \"additionalneeds\": \"Breakfast\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -599,6 +610,21 @@
             }
           ],
           "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "value",
+                  "value": "token=invalidtoken12345",
+                  "type": "string"
+                },
+                {
+                  "key": "key",
+                  "value": "Cookie",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "PUT",
             "header": [
               {
@@ -652,6 +678,9 @@
             }
           ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PUT",
             "header": [
               {

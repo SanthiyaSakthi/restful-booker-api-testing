@@ -27,6 +27,7 @@ jobs:
         run: |
           newman run collections/restful-booker-collection.json \
             -e environments/restful-booker-env.json \
+            -d data/booking-test-data.csv \
             -r cli,htmlextra \
             --reporter-htmlextra-export reports/newman-report.html
         continue-on-error: true
