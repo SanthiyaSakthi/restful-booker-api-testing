@@ -1,0 +1,38 @@
+name: Postman API Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  run-postman-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Newman
+        run: npm install -g newman newman-reporter-htmlextra
+
+      - name: Run Postman collection
+        run: |
+          newman run collections/restful-booker-collection.json \
+            -e environments/restful-booker-env.json \
+            -r cli,htmlextra \
+            --reporter-htmlextra-export reports/newman-report.html
+        continue-on-error: true
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-report
+          path: reports/newman-report.html

@@ -1,0 +1,6 @@
+firstname,lastname,totalprice,depositpaid,additionalneeds
+John,Smith,100,true,Breakfast
+Priya,Sharma,250,false,Dinner
+Wei,Chen,0,true,None
+Anna,Mueller,99999,false,Breakfast
+,Doe,150,true,Lunch

@@ -1,0 +1,12 @@
+# Node modules (if any get created locally)
+node_modules/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Newman HTML reports (regenerable — optional to ignore)
+reports/*.html
+
+# Any accidental local env files with real secrets
+*.local.json
