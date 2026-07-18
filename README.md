@@ -62,6 +62,16 @@ newman run collections/restful-booker-collection.json \
   -r cli,htmlextra --reporter-htmlextra-export reports/data-driven-report.html
 ```
 
+## Test Reports
+
+- [Main Test Report (HTML)](./reports/main-report.html)
+- [Data-Driven Test Report (HTML)](./reports/data-driven-report.html)
+
+> Download and open locally in a browser to view the full interactive report — GitHub does not render HTML files inline.
+
+Latest automated test reports are available as downloadable artifacts on the [GitHub Actions runs page](https://github.com/SanthiyaSakthi/restful-booker-api-testing/actions).
+
+
 ## Key Findings / Defects Documented
 
 | Scenario | Result | Category |
@@ -72,10 +82,3 @@ newman run collections/restful-booker-collection.json \
 | Wrong data type (`totalprice` as string) | 200, silently coerced to number | Design observation |
 | Missing/invalid auth token on Update | 403 Forbidden (not 401) | Minor spec deviation, not a defect |
 | Non-existent resource lookup | 404 Not Found | ✅ Correct behavior |
-
-## Next Steps (Documented Scope, Not Yet Built)
-
-- Full variable-scope demonstration across Global/Collection/Environment/Local
-- Postman Mock Servers and Monitors
-- Expanded data-driven coverage across Update/Delete operations
-
