@@ -23,17 +23,30 @@ jobs:
       - name: Install Newman
         run: npm install -g newman newman-reporter-htmlextra
 
-      - name: Run Postman collection
+      - name: Run main collection (single iteration)
         run: |
           newman run collections/restful-booker-collection.json \
-            -e environments/restful-booker-env.json \
-            -d data/booking-test-data.csv \
-            -r cli,htmlextra \
-            --reporter-htmlextra-export reports/newman-report.html
+          -e environments/restful-booker-env.json \
+          --folder "auth" \
+          --folder "Health & Smoke Tests" \
+          --folder "Booking - CRUD" \
+          -r cli,htmlextra \
+          --reporter-htmlextra-export reports/main-report.html
+        continue-on-error: true
+
+      - name: Run data-driven tests (5 iterations via CSV)
+        run: |
+          newman run collections/restful-booker-collection.json \
+           -e environments/restful-booker-env.json \
+           --folder "Data-Driven Tests" \
+           -d data/booking-test-data.csv \
+           -r cli,htmlextra \
+           --reporter-htmlextra-export reports/data-driven-report.html
         continue-on-error: true
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
           name: newman-report
-          path: reports/newman-report.html
+          path: reports/*.html
+         
